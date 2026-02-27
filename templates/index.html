@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Math Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+<div class="container-fluid py-3">
+  <h1 class="text-center mb-4 fw-bold text-primary">Math Dashboard</h1>
+
+  <!-- Tab nav -->
+  <ul class="nav nav-tabs justify-content-center mb-4" id="mainTab" role="tablist">
+    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-basic">Basic</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-sci">Scientific</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-conv">Unit Converter</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eq">Equation Solver</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-graph">Grapher</button></li>
+  </ul>
+
+  <div class="tab-content">
+
+    <!-- ═══════════════ 1. BASIC CALCULATOR ═══════════════ -->
+    <div class="tab-pane fade show active" id="tab-basic">
+      <div class="row justify-content-center">
+        <div class="col-sm-8 col-md-5 col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-body p-3">
+              <input id="basic-display" class="form-control form-control-lg text-end mb-3 display-input"
+                     readonly value="0" />
+              <div class="calc-grid">
+                <button class="btn btn-outline-secondary" onclick="basicInput('C')">C</button>
+                <button class="btn btn-outline-secondary" onclick="basicInput('±')">±</button>
+                <button class="btn btn-outline-secondary" onclick="basicInput('%')">%</button>
+                <button class="btn btn-warning"           onclick="basicInput('÷')">÷</button>
+
+                <button class="btn btn-light" onclick="basicInput('7')">7</button>
+                <button class="btn btn-light" onclick="basicInput('8')">8</button>
+                <button class="btn btn-light" onclick="basicInput('9')">9</button>
+                <button class="btn btn-warning"           onclick="basicInput('×')">×</button>
+
+                <button class="btn btn-light" onclick="basicInput('4')">4</button>
+                <button class="btn btn-light" onclick="basicInput('5')">5</button>
+                <button class="btn btn-light" onclick="basicInput('6')">6</button>
+                <button class="btn btn-warning"           onclick="basicInput('−')">−</button>
+
+                <button class="btn btn-light" onclick="basicInput('1')">1</button>
+                <button class="btn btn-light" onclick="basicInput('2')">2</button>
+                <button class="btn btn-light" onclick="basicInput('3')">3</button>
+                <button class="btn btn-warning"           onclick="basicInput('+')">+</button>
+
+                <button class="btn btn-light span-2" onclick="basicInput('0')">0</button>
+                <button class="btn btn-light" onclick="basicInput('.')">.</button>
+                <button class="btn btn-primary"           onclick="basicInput('=')">=</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ 2. SCIENTIFIC CALCULATOR ═══════════════ -->
+    <div class="tab-pane fade" id="tab-sci">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-body p-3">
+              <!-- Display -->
+              <input id="sci-display" class="form-control form-control-lg text-end mb-2 display-input"
+                     readonly value="0" />
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <small class="text-muted" id="sci-expression"></small>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="angle-toggle" />
+                  <label class="form-check-label" for="angle-toggle" id="angle-label">DEG</label>
+                </div>
+              </div>
+              <!-- Sci buttons -->
+              <div class="sci-grid">
+                <!-- Row 1 -->
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('sin')">sin</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('cos')">cos</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('tan')">tan</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('asin')">sin⁻¹</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('acos')">cos⁻¹</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('atan')">tan⁻¹</button>
+                <!-- Row 2 -->
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('log')">log</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('ln')">ln</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('sqrt')">√x</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('square')">x²</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOpTwo('power')">xʸ</button>
+                <button class="btn btn-outline-info btn-sm" onclick="sciOp('1/x')">1/x</button>
+                <!-- Row 3 -->
+                <button class="btn btn-outline-secondary btn-sm" onclick="sciOp('pi')">π</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="sciOp('e')">e</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="sciOp('factorial')">n!</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="sciOp('abs')">|x|</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="sciInput('(')">( </button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="sciInput(')')"> )</button>
+              </div>
+              <!-- Standard numpad below -->
+              <div class="calc-grid mt-3">
+                <button class="btn btn-outline-secondary" onclick="sciClear()">C</button>
+                <button class="btn btn-outline-secondary" onclick="sciDel()">⌫</button>
+                <button class="btn btn-outline-secondary" onclick="sciInput('%')">%</button>
+                <button class="btn btn-warning"           onclick="sciInput('÷')">÷</button>
+
+                <button class="btn btn-light" onclick="sciInput('7')">7</button>
+                <button class="btn btn-light" onclick="sciInput('8')">8</button>
+                <button class="btn btn-light" onclick="sciInput('9')">9</button>
+                <button class="btn btn-warning"           onclick="sciInput('×')">×</button>
+
+                <button class="btn btn-light" onclick="sciInput('4')">4</button>
+                <button class="btn btn-light" onclick="sciInput('5')">5</button>
+                <button class="btn btn-light" onclick="sciInput('6')">6</button>
+                <button class="btn btn-warning"           onclick="sciInput('−')">−</button>
+
+                <button class="btn btn-light" onclick="sciInput('1')">1</button>
+                <button class="btn btn-light" onclick="sciInput('2')">2</button>
+                <button class="btn btn-light" onclick="sciInput('3')">3</button>
+                <button class="btn btn-warning"           onclick="sciInput('+')">+</button>
+
+                <button class="btn btn-light span-2" onclick="sciInput('0')">0</button>
+                <button class="btn btn-light" onclick="sciInput('.')">.</button>
+                <button class="btn btn-primary"           onclick="sciEval()">=</button>
+              </div>
+              <div id="sci-result" class="result-box mt-2 text-end"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ 3. UNIT CONVERTER ═══════════════ -->
+    <div class="tab-pane fade" id="tab-conv">
+      <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Category</label>
+                <select id="conv-category" class="form-select" onchange="updateConvUnits()">
+                  <option value="length">Length</option>
+                  <option value="weight">Weight</option>
+                  <option value="temperature">Temperature</option>
+                  <option value="area">Area</option>
+                  <option value="volume">Volume</option>
+                  <option value="speed">Speed</option>
+                </select>
+              </div>
+              <div class="row g-3 align-items-end">
+                <div class="col-5">
+                  <label class="form-label">Value</label>
+                  <input id="conv-value" type="number" class="form-control" value="1" />
+                </div>
+                <div class="col-3">
+                  <label class="form-label">From</label>
+                  <select id="conv-from" class="form-select"></select>
+                </div>
+                <div class="col-1 text-center pb-2">→</div>
+                <div class="col-3">
+                  <label class="form-label">To</label>
+                  <select id="conv-to" class="form-select"></select>
+                </div>
+              </div>
+              <button class="btn btn-primary w-100 mt-3" onclick="doConvert()">Convert</button>
+              <div id="conv-result" class="result-box mt-3 text-center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ 4. EQUATION SOLVER ═══════════════ -->
+    <div class="tab-pane fade" id="tab-eq">
+      <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <label class="form-label fw-semibold">Enter equation in <code>x</code></label>
+              <input id="eq-input" class="form-control mb-2"
+                     placeholder="e.g.  x**2 - 5*x + 6 = 0"
+                     onkeydown="if(event.key==='Enter') doSolve()" />
+              <small class="text-muted d-block mb-3">
+                Use Python syntax: <code>x**2</code>, <code>2*x</code>, <code>sqrt(x)</code>.
+                Include <code>= 0</code> or write as expression.
+              </small>
+              <div class="d-flex gap-2 flex-wrap mb-2">
+                <button class="btn btn-outline-secondary btn-sm" onclick="eqInsert('x**2 - 5*x + 6 = 0')">x²−5x+6=0</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="eqInsert('2*x + 3 = 7')">2x+3=7</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="eqInsert('x**3 - x = 0')">x³−x=0</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="eqInsert('sin(x) = 0')">sin(x)=0</button>
+              </div>
+              <button class="btn btn-primary w-100" onclick="doSolve()">Solve</button>
+              <div id="eq-result" class="result-box mt-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ 5. FUNCTION GRAPHER ═══════════════ -->
+    <div class="tab-pane fade" id="tab-graph">
+      <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row g-3 align-items-end mb-3">
+                <div class="col-md-5">
+                  <label class="form-label fw-semibold">f(x) =</label>
+                  <input id="graph-func" class="form-control"
+                         placeholder="e.g. sin(x)  or  x**2 + 2*x - 3"
+                         onkeydown="if(event.key==='Enter') doGraph()" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">x min</label>
+                  <input id="graph-xmin" type="number" class="form-control" value="-10" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">x max</label>
+                  <input id="graph-xmax" type="number" class="form-control" value="10" />
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary w-100" onclick="doGraph()">Plot</button>
+                </div>
+              </div>
+              <div class="d-flex gap-2 flex-wrap mb-3">
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('sin(x)')">sin(x)</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('cos(x)')">cos(x)</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('tan(x)')">tan(x)</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('x**2')">x²</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('x**3 - 3*x')">x³−3x</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('exp(x)')">eˣ</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('log(x)')">ln(x)</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="graphPreset('sqrt(x)')">√x</button>
+              </div>
+              <div id="graph-spinner" class="text-center d-none">
+                <div class="spinner-border text-primary"></div>
+              </div>
+              <div id="graph-error" class="alert alert-danger d-none"></div>
+              <img id="graph-img" class="img-fluid rounded d-none" alt="graph" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- tab-content -->
+</div><!-- container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════════
+// 1. BASIC CALCULATOR
+// ══════════════════════════════════════════════════════════════
+let basicExpr = "", basicNewNum = true, basicLastResult = null;
+
+function basicInput(k) {
+  const disp = document.getElementById('basic-display');
+  if (k === 'C') { basicExpr = ''; disp.value = '0'; basicNewNum = true; return; }
+  if (k === '=') { basicCalc(); return; }
+  if (k === '±') {
+    if (disp.value !== '0') disp.value = disp.value.startsWith('-') ? disp.value.slice(1) : '-' + disp.value;
+    return;
+  }
+  if (k === '%') { disp.value = String(parseFloat(disp.value) / 100); return; }
+
+  const ops = ['÷', '×', '−', '+'];
+  if (ops.includes(k)) {
+    basicExpr = (basicExpr || disp.value) + ' ' + k + ' ';
+    basicNewNum = true;
+    return;
+  }
+  if (basicNewNum) { disp.value = (k === '.') ? '0.' : k; basicNewNum = false; }
+  else {
+    if (k === '.' && disp.value.includes('.')) return;
+    disp.value = (disp.value === '0' && k !== '.') ? k : disp.value + k;
+  }
+}
+
+function basicCalc() {
+  const disp = document.getElementById('basic-display');
+  const expr = (basicExpr || '') + disp.value;
+  const js = expr.replace(/÷/g, '/').replace(/×/g, '*').replace(/−/g, '-');
+  try {
+    let r = Function('"use strict"; return (' + js + ')')();
+    if (!isFinite(r)) { disp.value = 'Error'; }
+    else { disp.value = String(+r.toFixed(10)); }
+  } catch { disp.value = 'Error'; }
+  basicExpr = '';
+  basicNewNum = true;
+}
+
+// Keyboard support for basic calc
+document.addEventListener('keydown', function(e) {
+  const activeTab = document.querySelector('.tab-pane.active');
+  if (!activeTab || activeTab.id !== 'tab-basic') return;
+  const map = {'0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
+               '.':'.','+'  :'+','-':'−','*':'×','/':'÷','Enter':'=','Backspace':'C','Escape':'C'};
+  if (map[e.key]) { e.preventDefault(); basicInput(map[e.key]); }
+});
+
+// ══════════════════════════════════════════════════════════════
+// 2. SCIENTIFIC CALCULATOR
+// ══════════════════════════════════════════════════════════════
+let sciBuffer = '0', sciPendingOp = null, sciPendingVal = null, sciWaitSecond = false;
+
+function getAngleMode() {
+  return document.getElementById('angle-toggle').checked ? 'rad' : 'deg';
+}
+document.getElementById('angle-toggle').addEventListener('change', function() {
+  document.getElementById('angle-label').textContent = this.checked ? 'RAD' : 'DEG';
+});
+
+function sciInput(k) {
+  const disp = document.getElementById('sci-display');
+  const ops = ['÷', '×', '−', '+'];
+  if (ops.includes(k)) {
+    sciPendingVal = parseFloat(disp.value);
+    sciPendingOp  = k;
+    sciWaitSecond = true;
+    document.getElementById('sci-expression').textContent = sciPendingVal + ' ' + k;
+    return;
+  }
+  if (k === '%') { disp.value = String(parseFloat(disp.value) / 100); return; }
+  if (k === '(' || k === ')') {
+    if (disp.value === '0') disp.value = k; else disp.value += k;
+    return;
+  }
+  if (sciWaitSecond) { disp.value = k === '.' ? '0.' : k; sciWaitSecond = false; return; }
+  if (k === '.') { if (!disp.value.includes('.')) disp.value += '.'; return; }
+  disp.value = (disp.value === '0') ? k : disp.value + k;
+}
+
+function sciClear() {
+  document.getElementById('sci-display').value = '0';
+  document.getElementById('sci-expression').textContent = '';
+  document.getElementById('sci-result').textContent = '';
+  sciPendingOp = null; sciPendingVal = null; sciWaitSecond = false;
+}
+
+function sciDel() {
+  const d = document.getElementById('sci-display');
+  d.value = d.value.length > 1 ? d.value.slice(0, -1) : '0';
+}
+
+function sciEval() {
+  if (!sciPendingOp || sciPendingVal === null) return;
+  const disp = document.getElementById('sci-display');
+  const b = parseFloat(disp.value);
+  const ops = { '+': (a,b)=>a+b, '−': (a,b)=>a-b, '×': (a,b)=>a*b, '÷': (a,b)=>a/b };
+  const fn = ops[sciPendingOp];
+  if (!fn) return;
+  const result = fn(sciPendingVal, b);
+  disp.value = String(+result.toFixed(10));
+  document.getElementById('sci-expression').textContent = '';
+  sciPendingOp = null; sciPendingVal = null; sciWaitSecond = false;
+}
+
+function sciOp(op) {
+  const disp = document.getElementById('sci-display');
+  const val = parseFloat(disp.value);
+  const mode = getAngleMode();
+  fetch('/api/scientific', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({operation: op, value: val, angle_mode: mode})
+  }).then(r=>r.json()).then(data=>{
+    const resBox = document.getElementById('sci-result');
+    if (data.error) { resBox.innerHTML = '<span class="text-danger">Error: ' + data.error + '</span>'; return; }
+    const r = data.result;
+    const display = (typeof r === 'number') ? String(+r.toFixed(10)) : String(r);
+    disp.value = display;
+    resBox.innerHTML = '<span class="text-success">' + op + '(' + val + ') = ' + display + '</span>';
+  }).catch(()=>{ document.getElementById('sci-result').innerHTML='<span class="text-danger">Request failed</span>'; });
+}
+
+function sciOpTwo(op) {
+  const disp = document.getElementById('sci-display');
+  sciPendingVal = parseFloat(disp.value);
+  sciPendingOp = 'power';
+  sciWaitSecond = true;
+  document.getElementById('sci-expression').textContent = sciPendingVal + ' ^ ...';
+  // Override eval to use API
+  const origEval = sciEval;
+  sciEval = function() {
+    const b = parseFloat(disp.value);
+    const mode = getAngleMode();
+    fetch('/api/scientific', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({operation: 'power', value: sciPendingVal, value2: b, angle_mode: mode})
+    }).then(r=>r.json()).then(data=>{
+      const resBox = document.getElementById('sci-result');
+      if (data.error) { resBox.innerHTML='<span class="text-danger">Error: '+data.error+'</span>'; return; }
+      disp.value = String(+data.result.toFixed(10));
+      document.getElementById('sci-expression').textContent = '';
+      resBox.innerHTML='<span class="text-success">'+sciPendingVal+' ^ '+b+' = '+disp.value+'</span>';
+      sciPendingOp=null; sciPendingVal=null; sciWaitSecond=false;
+      sciEval = origEval;
+    });
+  };
+}
+
+// ══════════════════════════════════════════════════════════════
+// 3. UNIT CONVERTER
+// ══════════════════════════════════════════════════════════════
+const UNITS = {
+  length:      ['mm','cm','m','km','in','ft','yd','mi'],
+  weight:      ['mg','g','kg','t','oz','lb','st'],
+  temperature: ['C','F','K'],
+  area:        ['mm2','cm2','m2','km2','in2','ft2','yd2','acre','ha'],
+  volume:      ['mL','L','m3','cm3','fl_oz','cup','pt','qt','gal'],
+  speed:       ['m/s','km/h','mph','ft/s','knot'],
+};
+
+function updateConvUnits() {
+  const cat = document.getElementById('conv-category').value;
+  const units = UNITS[cat] || [];
+  const fromSel = document.getElementById('conv-from');
+  const toSel   = document.getElementById('conv-to');
+  fromSel.innerHTML = units.map(u=>`<option value="${u}">${u}</option>`).join('');
+  toSel.innerHTML   = units.map(u=>`<option value="${u}">${u}</option>`).join('');
+  // Default useful pairs
+  if (units.length > 1) toSel.selectedIndex = 1;
+}
+
+function doConvert() {
+  const cat   = document.getElementById('conv-category').value;
+  const from  = document.getElementById('conv-from').value;
+  const to    = document.getElementById('conv-to').value;
+  const val   = document.getElementById('conv-value').value;
+  const resBox = document.getElementById('conv-result');
+  resBox.textContent = 'Converting…';
+
+  fetch('/api/convert', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({category: cat, from_unit: from, to_unit: to, value: val})
+  }).then(r=>r.json()).then(data=>{
+    if (data.error) { resBox.innerHTML='<span class="text-danger">'+data.error+'</span>'; return; }
+    resBox.innerHTML = `<strong>${val} ${from} = ${+data.result.toFixed(8)} ${to}</strong>`;
+  }).catch(()=>{ resBox.innerHTML='<span class="text-danger">Request failed</span>'; });
+}
+
+updateConvUnits();
+
+// ══════════════════════════════════════════════════════════════
+// 4. EQUATION SOLVER
+// ══════════════════════════════════════════════════════════════
+function eqInsert(eq) { document.getElementById('eq-input').value = eq; }
+
+function doSolve() {
+  const eq = document.getElementById('eq-input').value.trim();
+  const resBox = document.getElementById('eq-result');
+  if (!eq) { resBox.innerHTML='<span class="text-warning">Please enter an equation.</span>'; return; }
+  resBox.textContent = 'Solving…';
+
+  fetch('/api/solve', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({equation: eq})
+  }).then(r=>r.json()).then(data=>{
+    if (data.error) { resBox.innerHTML='<span class="text-danger">'+data.error+'</span>'; return; }
+    const r = data.result;
+    if (typeof r === 'string') { resBox.textContent = r; return; }
+    resBox.innerHTML = 'Solutions: <strong>' + r.join(', ') + '</strong>';
+  }).catch(()=>{ resBox.innerHTML='<span class="text-danger">Request failed</span>'; });
+}
+
+// ══════════════════════════════════════════════════════════════
+// 5. FUNCTION GRAPHER
+// ══════════════════════════════════════════════════════════════
+function graphPreset(fn) {
+  document.getElementById('graph-func').value = fn;
+  doGraph();
+}
+
+function doGraph() {
+  const fn   = document.getElementById('graph-func').value.trim();
+  const xmin = document.getElementById('graph-xmin').value;
+  const xmax = document.getElementById('graph-xmax').value;
+  const img  = document.getElementById('graph-img');
+  const spin = document.getElementById('graph-spinner');
+  const err  = document.getElementById('graph-error');
+
+  if (!fn) { err.textContent='Please enter a function.'; err.classList.remove('d-none'); return; }
+  err.classList.add('d-none');
+  img.classList.add('d-none');
+  spin.classList.remove('d-none');
+
+  fetch('/api/graph', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({function: fn, x_min: xmin, x_max: xmax})
+  }).then(r=>r.json()).then(data=>{
+    spin.classList.add('d-none');
+    if (data.error) { err.textContent=data.error; err.classList.remove('d-none'); return; }
+    img.src = 'data:image/png;base64,' + data.image;
+    img.classList.remove('d-none');
+  }).catch(()=>{
+    spin.classList.add('d-none');
+    err.textContent='Request failed'; err.classList.remove('d-none');
+  });
+}
+</script>
+</body>
+</html>

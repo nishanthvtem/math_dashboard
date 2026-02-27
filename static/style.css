@@ -1,0 +1,77 @@
+/* ── Layout ── */
+body {
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+h1 {
+  letter-spacing: -0.5px;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+/* ── Calculator button grid (4 columns) ── */
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.calc-grid .btn {
+  padding: 14px 0;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}
+
+.calc-grid .span-2 {
+  grid-column: span 2;
+}
+
+/* ── Scientific button grid (6 columns) ── */
+.sci-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.sci-grid .btn {
+  padding: 6px 0;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+/* ── Display input ── */
+.display-input {
+  font-size: 1.8rem;
+  font-family: 'Courier New', monospace;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: none;
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+}
+
+.display-input:focus {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  box-shadow: 0 0 0 2px #89b4fa55;
+}
+
+/* ── Result box ── */
+.result-box {
+  font-size: 1rem;
+  min-height: 1.6rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+/* ── Responsive tweak ── */
+@media (max-width: 576px) {
+  .sci-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
