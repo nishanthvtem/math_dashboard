@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+com.temenos
+
 public class Calculator {
 
     public static double add(double a, double b) {
