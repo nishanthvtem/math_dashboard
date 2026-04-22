@@ -5,6 +5,10 @@ import re
 
 from flask import Flask, render_template, request, jsonify
 
+
+com.temenos
+$INSERT I_COMMON
+
 app = Flask(__name__)
 
 
